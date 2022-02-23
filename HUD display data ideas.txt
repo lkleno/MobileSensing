@@ -1,0 +1,14 @@
+steps -> main
+walking / running distance -> main
+heartrate -> main
+avrage heart beats -> main
+sleep duration -> main
+pattern suggestion alert -> main
+pattern suggestion -> main
+
+
+flights climbed -> optional
+step length (distance between front and back foot when walking) -> optional
+walking speed -> optional
+double support time (percentage of time during a walk that both feet are on th ground) -> optional
+walking asymetry (percentage of time one foot is faster than the other) -> optional
