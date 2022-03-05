@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MobileSensing</string>
+    <string name="luma_label">Luminosity:</string>
+    <string name="luma_value" />
 </resources>
