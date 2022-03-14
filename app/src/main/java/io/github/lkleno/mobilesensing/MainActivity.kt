@@ -3,23 +3,24 @@ package io.github.lkleno.mobilesensing
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.VideoCapture
 import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.github.lkleno.mobilesensing.databinding.ActivityMainBinding
 import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.math.roundToLong
 
 typealias LumaListener = (luma : Double) -> Unit
 private lateinit var binding : ActivityMainBinding
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private var videoCapture : VideoCapture<Recorder>? = null
     private var recording : Recording? = null
 
+    private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +40,16 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        flagSetup()
 
         // Check Camera Permissions
         if(allPermissionsGranted()) startCamera()
         else ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+
+        menuToggle = ActionBarDrawerToggle(this, view, R.string.menu_open, R.string.menu_close)
+        view.addDrawerListener(menuToggle)
+        menuToggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         listenerSetup()
 
@@ -71,11 +78,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(menuToggle.onOptionsItemSelected(item))
+        {
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun listenerSetup() {  }
+    private fun flagSetup()
+    {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    private fun listenerSetup() {
+        binding.navigationView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.menu_object1 -> Toast.makeText(applicationContext, "Clicked Item 1", Toast.LENGTH_SHORT).show()
+                R.id.menu_object2 -> Toast.makeText(applicationContext, "Clicked Item 2", Toast.LENGTH_SHORT).show()
+                R.id.menu_object3 -> Toast.makeText(applicationContext, "Clicked Item 3", Toast.LENGTH_SHORT).show()
+                R.id.menu_object4 -> Toast.makeText(applicationContext, "Clicked Item 4", Toast.LENGTH_SHORT).show()
+                R.id.menu_object5 -> Toast.makeText(applicationContext, "Clicked Item 5", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }
+    }
 
     companion object {
         private const val TAG = "MobileSensing"

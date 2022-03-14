@@ -2,4 +2,6 @@
     <string name="app_name">MobileSensing</string>
     <string name="luma_label">Luminosity:</string>
     <string name="luma_value" />
+    <string name="menu_open">Open</string>
+    <string name="menu_close">Close</string>
 </resources>
