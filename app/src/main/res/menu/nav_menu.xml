@@ -15,4 +15,31 @@
     <item
         android:id="@+id/menu_object5"
         android:title="Object 5" />
+    <item
+        android:id="@+id/menu_object6"
+        android:title="Object 6" />
+    <item
+        android:id="@+id/menu_object7"
+        android:title="Object 7" />
+    <item
+        android:id="@+id/menu_object8"
+        android:title="Object 8" />
+    <item
+        android:id="@+id/menu_object9"
+        android:title="Object 9" />
+    <item
+        android:id="@+id/menu_object10"
+        android:title="Object 10" />
+    <item
+        android:id="@+id/footer_spacer_1"
+        android:checkable="false"
+        android:enabled="false"
+        android:orderInCategory="200"
+        android:title="" />
+    <item
+        android:id="@+id/footer_spacer_2"
+        android:checkable="false"
+        android:enabled="false"
+        android:orderInCategory="200"
+        android:title="" />
 </menu>
