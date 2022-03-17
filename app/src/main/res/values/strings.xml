@@ -4,4 +4,6 @@
     <string name="luma_value" />
     <string name="menu_open">Open</string>
     <string name="menu_close">Close</string>
+    <string name="max_objects_label">Max Objects:</string>
+    <string name="max_objects_value" />
 </resources>
