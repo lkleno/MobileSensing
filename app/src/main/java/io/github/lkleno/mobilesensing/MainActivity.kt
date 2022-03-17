@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.github.lkleno.mobilesensing.databinding.ActivityMainBinding
+import io.github.lkleno.mobilesensing.layout.CustomDrawerLayout
 import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -46,14 +48,9 @@ class MainActivity : AppCompatActivity() {
         if(allPermissionsGranted()) startCamera()
         else ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
 
-        menuToggle = ActionBarDrawerToggle(this, view, R.string.menu_open, R.string.menu_close)
-        view.addDrawerListener(menuToggle)
-        menuToggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        uiSetup(view)
 
         listenerSetup()
-
-        cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
     override fun onDestroy() {
@@ -96,7 +93,20 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
-    private fun listenerSetup() {
+    private fun uiSetup(view : CustomDrawerLayout)
+    {
+        menuToggle = ActionBarDrawerToggle(this, view, R.string.menu_open, R.string.menu_close)
+        view.addDrawerListener(menuToggle)
+        menuToggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.maxObjectsValue.text = binding.maxObjectsSlider.progress.toString()
+
+        cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+
+    private fun listenerSetup()
+    {
         binding.navigationView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.menu_object1 -> Toast.makeText(applicationContext, "Clicked Item 1", Toast.LENGTH_SHORT).show()
@@ -107,6 +117,19 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        binding.maxObjectsSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener
+        {
+
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean)
+            {
+                customRunOnUIThread { binding.maxObjectsValue.text = seek.progress.toString() }
+            }
+
+            override fun onStartTrackingTouch(seek: SeekBar) {}
+
+            override fun onStopTrackingTouch(seek: SeekBar) {}
+        })
     }
 
     companion object {
