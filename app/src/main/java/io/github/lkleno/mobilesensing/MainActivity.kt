@@ -24,6 +24,7 @@ import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+
 typealias LumaListener = (luma : Double) -> Unit
 private lateinit var binding : ActivityMainBinding
 
@@ -101,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.maxObjectsValue.text = binding.maxObjectsSlider.progress.toString()
+
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
