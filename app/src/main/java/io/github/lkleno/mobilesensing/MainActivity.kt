@@ -116,10 +116,9 @@ class MainActivity : AppCompatActivity() {
     {
         binding.navigationView.setNavigationItemSelectedListener {
             //FIXME @@@@@@@@@@@@@@@@@@@@@@@
-            ar.enableAR()
             when(it.itemId) {
-                R.id.menu_object1 -> Toast.makeText(applicationContext, "Clicked Item 1", Toast.LENGTH_SHORT).show()
-                R.id.menu_object2 -> Toast.makeText(applicationContext, "Clicked Item 2", Toast.LENGTH_SHORT).show()
+                R.id.menu_object1 -> ar.enableAR()
+                R.id.menu_object2 -> ar.disableAR()
                 R.id.menu_object3 -> Toast.makeText(applicationContext, "Clicked Item 3", Toast.LENGTH_SHORT).show()
                 R.id.menu_object4 -> Toast.makeText(applicationContext, "Clicked Item 4", Toast.LENGTH_SHORT).show()
                 R.id.menu_object5 -> Toast.makeText(applicationContext, "Clicked Item 5", Toast.LENGTH_SHORT).show()

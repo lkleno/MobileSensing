@@ -30,7 +30,7 @@ class AR(private var context: Context, private var arView: FrameLayout)
 
     fun disableAR()
     {
-
+        arView.removeAllViews()
     }
 
     private fun drawRect(x1 : Int, y1: Int, x2 : Int, y2 : Int)
