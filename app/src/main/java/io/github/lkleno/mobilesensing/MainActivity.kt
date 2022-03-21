@@ -19,6 +19,7 @@ import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.github.lkleno.mobilesensing.databinding.ActivityMainBinding
+import io.github.lkleno.mobilesensing.layout.AR
 import io.github.lkleno.mobilesensing.layout.CustomDrawerLayout
 import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
+    private lateinit var ar : AR
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,12 +106,17 @@ class MainActivity : AppCompatActivity() {
         binding.maxObjectsValue.text = binding.maxObjectsSlider.progress.toString()
 
 
+        ar = AR(this, binding.arView)
+
+
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
     private fun listenerSetup()
     {
         binding.navigationView.setNavigationItemSelectedListener {
+            //FIXME @@@@@@@@@@@@@@@@@@@@@@@
+            ar.enableAR()
             when(it.itemId) {
                 R.id.menu_object1 -> Toast.makeText(applicationContext, "Clicked Item 1", Toast.LENGTH_SHORT).show()
                 R.id.menu_object2 -> Toast.makeText(applicationContext, "Clicked Item 2", Toast.LENGTH_SHORT).show()
