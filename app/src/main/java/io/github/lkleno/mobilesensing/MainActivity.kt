@@ -5,8 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -36,13 +38,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
+    private lateinit var view : CustomDrawerLayout
     private lateinit var ar : AR
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
+        view = binding.root
         setContentView(view)
 
         flagSetup()
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         if(allPermissionsGranted()) startCamera()
         else ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
 
-        uiSetup(view)
+        uiSetup()
 
         listenerSetup()
     }
@@ -96,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
-    private fun uiSetup(view : CustomDrawerLayout)
+    private fun uiSetup()
     {
         menuToggle = ActionBarDrawerToggle(this, view, R.string.menu_open, R.string.menu_close)
         view.addDrawerListener(menuToggle)
@@ -114,17 +117,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun listenerSetup()
     {
-        binding.navigationView.setNavigationItemSelectedListener {
-            //FIXME @@@@@@@@@@@@@@@@@@@@@@@
-            when(it.itemId) {
+        val menu = binding.navigationView.menu
+        val radioGroup = menu.getItem(0).actionView as RadioGroup
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId) {
                 R.id.menu_object1 -> ar.enableAR()
                 R.id.menu_object2 -> ar.disableAR()
                 R.id.menu_object3 -> Toast.makeText(applicationContext, "Clicked Item 3", Toast.LENGTH_SHORT).show()
                 R.id.menu_object4 -> Toast.makeText(applicationContext, "Clicked Item 4", Toast.LENGTH_SHORT).show()
                 R.id.menu_object5 -> Toast.makeText(applicationContext, "Clicked Item 5", Toast.LENGTH_SHORT).show()
+                R.id.menu_object6 -> Toast.makeText(applicationContext, "Clicked Item 6", Toast.LENGTH_SHORT).show()
+                R.id.menu_object7 -> Toast.makeText(applicationContext, "Clicked Item 7", Toast.LENGTH_SHORT).show()
+                R.id.menu_object8 -> Toast.makeText(applicationContext, "Clicked Item 8", Toast.LENGTH_SHORT).show()
+                R.id.menu_object9 -> Toast.makeText(applicationContext, "Clicked Item 9", Toast.LENGTH_SHORT).show()
+                R.id.menu_object10 -> Toast.makeText(applicationContext, "Clicked Item 10", Toast.LENGTH_SHORT).show()
             }
-            true
         }
+
 
         binding.maxObjectsSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener
         {
