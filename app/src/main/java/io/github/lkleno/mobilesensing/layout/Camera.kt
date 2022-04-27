@@ -7,8 +7,9 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.view.View
 import android.widget.FrameLayout
+import io.github.lkleno.mobilesensing.tensorflow.Detector
 
-class AR(private var context: Context, private var arView: FrameLayout)
+class AR(private var context: Context, private var arView: FrameLayout, private var detector: Detector)
 {
     private var colors = intArrayOf(
         Color.CYAN,
@@ -26,6 +27,7 @@ class AR(private var context: Context, private var arView: FrameLayout)
         {
             drawRect((i - 1) * 100, (i - 1) * 100, i * 100, i *100)
         }
+
     }
 
     fun disableAR()
