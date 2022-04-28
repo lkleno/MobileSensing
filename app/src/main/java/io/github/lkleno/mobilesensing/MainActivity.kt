@@ -7,6 +7,7 @@ import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -40,8 +41,17 @@ class MainActivity : AppCompatActivity() {
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
     private var recording : Recording? = null
-    // TODO Talk about how youre gonna implement the audio
-    private val dictionary = mapOf("one" to "one.mp3", "two" to "two.mp3")
+    private val dictionary = mapOf("2" to  MediaPlayer.create(this,R.raw.two), "3"  to  MediaPlayer.create(this,R.raw.three),
+    "4"  to  MediaPlayer.create(this,R.raw.four), "5"  to  MediaPlayer.create(this,R.raw.five), "6"  to  MediaPlayer.create(this,R.raw.six),
+    "7"  to  MediaPlayer.create(this,R.raw.seven), "8"  to  MediaPlayer.create(this,R.raw.eight), "9"  to  MediaPlayer.create(this,R.raw.nine),
+    "10"  to  MediaPlayer.create(this,R.raw.ten), "Clothing"  to  MediaPlayer.create(this,R.raw.clothing), "Clothings"  to  MediaPlayer.create(this,R.raw.clothings),
+    "Coin"  to  MediaPlayer.create(this,R.raw.coin), "Coins"  to  MediaPlayer.create(this,R.raw.coins), "Earrings"  to  MediaPlayer.create(this,R.raw.earrings),
+    "Footwear"  to  MediaPlayer.create(this,R.raw.footwear), "Glasses"  to  MediaPlayer.create(this,R.raw.glasses), "Necklace"  to  MediaPlayer.create(this,R.raw.necklace),
+    "Necklaces"  to  MediaPlayer.create(this,R.raw.necklaces), "Watch"  to  MediaPlayer.create(this,R.raw.watch), "Watchs"  to  MediaPlayer.create(this,R.raw.watches),
+    "Wheelchair"  to  MediaPlayer.create(this,R.raw.wheelchair), "Wheelchairs"  to  MediaPlayer.create(this,R.raw.wheelchairs), "OneUpperLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_left),
+    "OneUpperRight"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_right), "OneLowerLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_left), "OneLowerRight"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_right),
+    "OneCenter"  to  MediaPlayer.create(this,R.raw.one_sentence_center), "UpperRight"  to  MediaPlayer.create(this,R.raw.sentence_upper_right), "UpperLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left),
+    "LowerRight"  to  MediaPlayer.create(this,R.raw.sentence_lower_right), "LowerLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left), "Center"  to  MediaPlayer.create(this,R.raw.sentence_center))
 
     private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
@@ -71,22 +81,51 @@ class MainActivity : AppCompatActivity() {
     }
     fun PlayAudioTest(view: View) {
         //val audio : MediaPlayer = MediaPlayer.create(this, R.raw.sentence_upper_right)
-        //audio.start()
-        PlayAudio()
+        //val audio2 : android.media.MediaPlayer = android.media.MediaPlayer.create(this, R.raw.one_sentence_center)
+        //PlayAudio(audio2, [])
+        //val audio3 = dictionary["OneLowerLeft"]
+        //if (audio3 != null) {
+            //PlayAudio(audio3)
+        //}
+        StartPlayAudio(3,"Footwear","LowerRight")
+        //val seznam = listOf<String>("audio","audio2")
     }
 
     fun StartPlayAudio(numOfItems: Int, item: String, location: String){
+        //val test = listOf<MediaPlayer>()
+        //val numberAudio : MediaPlayer? = null
+        if(numOfItems > 1){
+            if ((item == "Earrings") || (item == "Footwear") || (item == "Glasees")){
+                val tmp = listOf<String>( numOfItems.toString(), item, location)
+                PlayAudio(tmp)
+            }
+            else {
+                val tmp = listOf<String>(numOfItems.toString(), (item + "s"), location)
+                PlayAudio(tmp)
+            }
+        }
+        else{
+            val tmp = listOf<String>(item, ("One" + location))
+            PlayAudio(tmp)
+        }
 
     }
-    private fun PlayAudio(){
-        val audio : MediaPlayer = MediaPlayer.create(this, R.raw.sentence_upper_right)
+    private fun PlayAudio(audioQueue : List<String>){
+        //
+        // val audio : MediaPlayer = MediaPlayer.create(this, R.raw.sentence_upper_right)
         //audio.prepare()
-        audio.setOnCompletionListener(OnCompletionListener {
-            audio.stop()
-            //Play next audio - infinite loop
-            PlayAudio()
-        })
-        audio.start()
+        if(!audioQueue.isEmpty()) {
+            val audio = dictionary[audioQueue[0]]
+             if (audio != null) {
+                audio.setOnCompletionListener(OnCompletionListener {
+                    audio.stop()
+                    val newAudioQueue = audioQueue.drop(1)
+                    //Play next audio - infinite loop
+                    PlayAudio(newAudioQueue)
+                })
+                audio.start()
+             }
+        }
     }
     override fun onDestroy() {
         super.onDestroy()
@@ -236,7 +275,6 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace();
         }
     }
-
 
 }
 
