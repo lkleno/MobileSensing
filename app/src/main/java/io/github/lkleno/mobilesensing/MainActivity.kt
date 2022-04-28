@@ -1,11 +1,15 @@
 package io.github.lkleno.mobilesensing
 
 import android.Manifest
+import android.R.attr.path
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
+import android.media.MediaPlayer.OnCompletionListener
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.RadioGroup
 import android.widget.SeekBar
@@ -36,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
     private var recording : Recording? = null
+    // TODO Talk about how youre gonna implement the audio
+    private val dictionary = mapOf("one" to "one.mp3", "two" to "two.mp3")
 
     private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
@@ -60,8 +66,28 @@ class MainActivity : AppCompatActivity() {
         uiSetup()
 
         listenerSetup()
+
+
+    }
+    fun PlayAudioTest(view: View) {
+        //val audio : MediaPlayer = MediaPlayer.create(this, R.raw.sentence_upper_right)
+        //audio.start()
+        PlayAudio()
     }
 
+    fun StartPlayAudio(numOfItems: Int, item: String, location: String){
+
+    }
+    private fun PlayAudio(){
+        val audio : MediaPlayer = MediaPlayer.create(this, R.raw.sentence_upper_right)
+        //audio.prepare()
+        audio.setOnCompletionListener(OnCompletionListener {
+            audio.stop()
+            //Play next audio - infinite loop
+            PlayAudio()
+        })
+        audio.start()
+    }
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
@@ -210,6 +236,8 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace();
         }
     }
+
+
 }
 
 // FIXME TEMP TO TEST OUT IMAGE

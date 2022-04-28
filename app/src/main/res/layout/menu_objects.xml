@@ -23,6 +23,7 @@
         android:textSize="20sp" />
 
     <RadioButton
+        android:onClick="PlayAudioTest"
         android:id="@+id/menu_object3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
