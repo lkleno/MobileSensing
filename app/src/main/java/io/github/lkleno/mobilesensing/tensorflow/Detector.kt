@@ -29,7 +29,7 @@ class Detector(private var context : MainActivity) {
 
         val results = detector.detect(image)
 
-        debugPrint(results)
+//        debugPrint(results)
 
         return results
     }
