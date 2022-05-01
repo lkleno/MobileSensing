@@ -137,16 +137,15 @@ class MainActivity : AppCompatActivity() {
         val radioGroup = menu.getItem(0).actionView as RadioGroup
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId) {
-                R.id.menu_object1 -> camera.enableBoxes()
-                R.id.menu_object2 -> camera.disableBoxes()
-                R.id.menu_object3 -> Toast.makeText(applicationContext, "Clicked Item 3", Toast.LENGTH_SHORT).show()
-                R.id.menu_object4 -> Toast.makeText(applicationContext, "Clicked Item 4", Toast.LENGTH_SHORT).show()
-                R.id.menu_object5 -> Toast.makeText(applicationContext, "Clicked Item 5", Toast.LENGTH_SHORT).show()
-                R.id.menu_object6 -> Toast.makeText(applicationContext, "Clicked Item 6", Toast.LENGTH_SHORT).show()
-                R.id.menu_object7 -> Toast.makeText(applicationContext, "Clicked Item 7", Toast.LENGTH_SHORT).show()
-                R.id.menu_object8 -> Toast.makeText(applicationContext, "Clicked Item 8", Toast.LENGTH_SHORT).show()
-                R.id.menu_object9 -> Toast.makeText(applicationContext, "Clicked Item 9", Toast.LENGTH_SHORT).show()
-                R.id.menu_object10 -> Toast.makeText(applicationContext, "Clicked Item 10", Toast.LENGTH_SHORT).show()
+                R.id.menu_nothing    -> camera.disableBoxes()
+                R.id.menu_clothing   -> camera.enableBoxes(getString(R.string.string_clothing))
+                R.id.menu_coin       -> camera.enableBoxes(getString(R.string.string_coin))
+                R.id.menu_earrings   -> camera.enableBoxes(getString(R.string.string_earrings))
+                R.id.menu_footwear   -> camera.enableBoxes(getString(R.string.string_footwear))
+                R.id.menu_glasses    -> camera.enableBoxes(getString(R.string.string_glasses))
+                R.id.menu_necklace   -> camera.enableBoxes(getString(R.string.string_necklace))
+                R.id.menu_watch      -> camera.enableBoxes(getString(R.string.string_watch))
+                R.id.menu_wheelchair -> camera.enableBoxes(getString(R.string.string_wheelchair))
             }
         }
 
