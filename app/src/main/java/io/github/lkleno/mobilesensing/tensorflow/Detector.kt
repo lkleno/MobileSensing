@@ -13,11 +13,12 @@ class Detector(private var context : MainActivity) {
 
     private val modelFile = "model.tflite"
 
-    fun run(bitmap : Bitmap, maxResults : Int, scoreThreshold : Float): MutableList<Detection>? {
+    fun run(bitmap: Bitmap, allowedLabel : String, maxResults: Int, scoreThreshold: Float): MutableList<Detection>? {
         val image =  TensorImage.fromBitmap(bitmap)
 
         val options = ObjectDetector.ObjectDetectorOptions.builder()
             .setMaxResults(maxResults)
+            .setLabelAllowList(mutableListOf(allowedLabel))
             .setScoreThreshold(scoreThreshold)
             .build()
 
