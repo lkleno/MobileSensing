@@ -1,12 +1,13 @@
-package io.github.lkleno.mobilesensing
+package io.github.lkleno.mobilesensing.audio
 
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
-import androidx.camera.core.*
 import io.github.lkleno.mobilesensing.MainActivity
+import io.github.lkleno.mobilesensing.R
 
-class audio(private var context: MainActivity){
-    fun StartPlayAudio(
+class Audio(private var context: MainActivity){
+
+    private fun startPlayAudio(
         numOfItems: Int,
         numOfItemsBool: Boolean,
         item: String,
@@ -17,7 +18,7 @@ class audio(private var context: MainActivity){
         if (!numOfItemsBool) {
             if (numOfItems > 1) {
                 when (numOfItems) {
-                    2 -> PlayAudio(
+                    2 -> playAudio(
                         MediaPlayer.create(context, R.raw.two),
                         numOfItems,
                         numOfItemsBool,
@@ -26,7 +27,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    3 -> PlayAudio(
+                    3 -> playAudio(
                         MediaPlayer.create(context, R.raw.three),
                         numOfItems,
                         numOfItemsBool,
@@ -35,7 +36,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    4 -> PlayAudio(
+                    4 -> playAudio(
                         MediaPlayer.create(context, R.raw.four),
                         numOfItems,
                         numOfItemsBool,
@@ -44,7 +45,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    5 -> PlayAudio(
+                    5 -> playAudio(
                         MediaPlayer.create(context, R.raw.five),
                         numOfItems,
                         numOfItemsBool,
@@ -53,7 +54,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    6 -> PlayAudio(
+                    6 -> playAudio(
                         MediaPlayer.create(context, R.raw.six),
                         numOfItems,
                         numOfItemsBool,
@@ -62,7 +63,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    7 -> PlayAudio(
+                    7 -> playAudio(
                         MediaPlayer.create(context, R.raw.seven),
                         numOfItems,
                         numOfItemsBool,
@@ -71,7 +72,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    8 -> PlayAudio(
+                    8 -> playAudio(
                         MediaPlayer.create(context, R.raw.eight),
                         numOfItems,
                         numOfItemsBool,
@@ -80,7 +81,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    9 -> PlayAudio(
+                    9 -> playAudio(
                         MediaPlayer.create(context, R.raw.nine),
                         numOfItems,
                         numOfItemsBool,
@@ -89,7 +90,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    10 -> PlayAudio(
+                    10 -> playAudio(
                         MediaPlayer.create(context, R.raw.ten),
                         numOfItems,
                         numOfItemsBool,
@@ -100,12 +101,12 @@ class audio(private var context: MainActivity){
                     )
                 }
             } else {
-                StartPlayAudio(numOfItems, true, item, itemBool, location, locationBool)
+                startPlayAudio(numOfItems, true, item, itemBool, location, locationBool)
             }
         } else if (!itemBool) {
             if ((item == "Earrings") || (item == "Footwear") || (item == "Glasses")) {
                 when (item) {
-                    "Earrings" -> PlayAudio(
+                    "Earrings" -> playAudio(
                         MediaPlayer.create(context, R.raw.earrings),
                         numOfItems,
                         numOfItemsBool,
@@ -114,7 +115,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "Footwear" -> PlayAudio(
+                    "Footwear" -> playAudio(
                         MediaPlayer.create(context, R.raw.footwear),
                         numOfItems,
                         numOfItemsBool,
@@ -123,7 +124,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "Glasses" -> PlayAudio(
+                    "Glasses" -> playAudio(
                         MediaPlayer.create(context, R.raw.glasses),
                         numOfItems,
                         numOfItemsBool,
@@ -136,7 +137,7 @@ class audio(private var context: MainActivity){
             } else {
                 if (numOfItems > 1) {
                     when (item) {
-                        "Necklase" -> PlayAudio(
+                        "Necklase" -> playAudio(
                             MediaPlayer.create(context, R.raw.necklaces),
                             numOfItems,
                             numOfItemsBool,
@@ -145,7 +146,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Coin" -> PlayAudio(
+                        "Coin" -> playAudio(
                             MediaPlayer.create(context, R.raw.coins),
                             numOfItems,
                             numOfItemsBool,
@@ -154,7 +155,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Clothing" -> PlayAudio(
+                        "Clothing" -> playAudio(
                             MediaPlayer.create(context, R.raw.clothings),
                             numOfItems,
                             numOfItemsBool,
@@ -163,7 +164,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Watch" -> PlayAudio(
+                        "Watch" -> playAudio(
                             MediaPlayer.create(context, R.raw.watches),
                             numOfItems,
                             numOfItemsBool,
@@ -172,7 +173,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Wheelchair" -> PlayAudio(
+                        "Wheelchair" -> playAudio(
                             MediaPlayer.create(context, R.raw.wheelchairs),
                             numOfItems,
                             numOfItemsBool,
@@ -184,7 +185,7 @@ class audio(private var context: MainActivity){
                     }
                 } else {
                     when (item) {
-                        "Necklase" -> PlayAudio(
+                        "Necklase" -> playAudio(
                             MediaPlayer.create(context, R.raw.necklace),
                             numOfItems,
                             numOfItemsBool,
@@ -193,7 +194,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Coin" -> PlayAudio(
+                        "Coin" -> playAudio(
                             MediaPlayer.create(context, R.raw.coin),
                             numOfItems,
                             numOfItemsBool,
@@ -202,7 +203,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Clothing" -> PlayAudio(
+                        "Clothing" -> playAudio(
                             MediaPlayer.create(context, R.raw.clothing),
                             numOfItems,
                             numOfItemsBool,
@@ -211,7 +212,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Watch" -> PlayAudio(
+                        "Watch" -> playAudio(
                             MediaPlayer.create(context, R.raw.watch),
                             numOfItems,
                             numOfItemsBool,
@@ -220,7 +221,7 @@ class audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Wheelchair" -> PlayAudio(
+                        "Wheelchair" -> playAudio(
                             MediaPlayer.create(context, R.raw.wheelchair),
                             numOfItems,
                             numOfItemsBool,
@@ -235,7 +236,7 @@ class audio(private var context: MainActivity){
         } else if (!locationBool) {
             if (numOfItems > 1) {
                 when (location) {
-                    "Center" -> PlayAudio(
+                    "Center" -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_center),
                         numOfItems,
                         numOfItemsBool,
@@ -244,7 +245,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "LowerRight" -> PlayAudio(
+                    "LowerRight" -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_lower_right),
                         numOfItems,
                         numOfItemsBool,
@@ -253,7 +254,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "LowerLeft" -> PlayAudio(
+                    "LowerLeft" -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_lower_left),
                         numOfItems,
                         numOfItemsBool,
@@ -262,7 +263,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "UpperRight" -> PlayAudio(
+                    "UpperRight" -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_upper_right),
                         numOfItems,
                         numOfItemsBool,
@@ -271,7 +272,7 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "UpperLeft" -> PlayAudio(
+                    "UpperLeft" -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_upper_left),
                         numOfItems,
                         numOfItemsBool,
@@ -283,7 +284,7 @@ class audio(private var context: MainActivity){
                 }
             } else {
                 when (location) {
-                    "Center" -> PlayAudio(
+                    "Center" -> playAudio(
                         MediaPlayer.create(context, R.raw.one_sentence_center),
                         numOfItems,
                         numOfItemsBool,
@@ -292,25 +293,25 @@ class audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "LowerRight" -> PlayAudio(
+                    "LowerRight" -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_lower_right
                         ), numOfItems, numOfItemsBool, item, itemBool, location, locationBool
                     )
-                    "LowerLeft" -> PlayAudio(
+                    "LowerLeft" -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_lower_left
                         ), numOfItems, numOfItemsBool, item, itemBool, location, locationBool
                     )
-                    "UpperRight" -> PlayAudio(
+                    "UpperRight" -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_upper_right
                         ), numOfItems, numOfItemsBool, item, itemBool, location, locationBool
                     )
-                    "UpperLeft" -> PlayAudio(
+                    "UpperLeft" -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_upper_left
@@ -321,7 +322,7 @@ class audio(private var context: MainActivity){
         }
     }
 
-    private fun PlayAudio(
+    private fun playAudio(
         audio: MediaPlayer,
         numOfItems: Int,
         numOfItemsBool: Boolean,
@@ -333,11 +334,11 @@ class audio(private var context: MainActivity){
         audio.setOnCompletionListener(OnCompletionListener {
             audio.stop()
             if (!numOfItemsBool) {
-                StartPlayAudio(numOfItems, true, item, itemBool, location, locationBool)
+                startPlayAudio(numOfItems, true, item, itemBool, location, locationBool)
             } else if (!itemBool) {
-                StartPlayAudio(numOfItems, true, item, true, location, locationBool)
+                startPlayAudio(numOfItems, true, item, true, location, locationBool)
             } else if (!locationBool) {
-                StartPlayAudio(numOfItems, true, item, true, location, true)
+                startPlayAudio(numOfItems, true, item, true, location, true)
             }
         })
         audio.start()
