@@ -6,4 +6,13 @@
     <string name="menu_close">Close</string>
     <string name="max_objects_label">Max Objects:</string>
     <string name="max_objects_value" />
+    <string name="string_nothing">Nothing</string>
+    <string name="string_clothing">Clothing</string>
+    <string name="string_earrings">Earrings</string>
+    <string name="string_footwear">Footwear</string>
+    <string name="string_glasses">Glasses</string>
+    <string name="string_necklace">Necklace</string>
+    <string name="string_watch">Watch</string>
+    <string name="string_wheelchair">Wheelchair</string>
+    <string name="string_coin">Coin</string>
 </resources>
