@@ -19,7 +19,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.MediaStoreOutputOptions
 import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
@@ -42,17 +41,17 @@ class MainActivity : AppCompatActivity() {
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
     private var recording : Recording? = null
-    //private val dictionary = mapOf("2" to  MediaPlayer.create(this,R.raw.two))//, "3"  to  MediaPlayer.create(this,R.raw.three),
-    //"4"  to  MediaPlayer.create(this,R.raw.four), "5"  to  MediaPlayer.create(this,R.raw.five), "6"  to  MediaPlayer.create(this,R.raw.six))//,
-    //"7"  to  MediaPlayer.create(this,R.raw.seven), "8"  to  MediaPlayer.create(this,R.raw.eight), "9"  to  MediaPlayer.create(this,R.raw.nine),
-    //"10"  to  MediaPlayer.create(this,R.raw.ten), "Clothing"  to  MediaPlayer.create(this,R.raw.clothing), "Clothings"  to  MediaPlayer.create(this,R.raw.clothings),
-    //"Coin"  to  MediaPlayer.create(this,R.raw.coin), "Coins"  to  MediaPlayer.create(this,R.raw.coins), "Earrings"  to  MediaPlayer.create(this,R.raw.earrings),
-    //"Footwear"  to  MediaPlayer.create(this,R.raw.footwear), "Glasses"  to  MediaPlayer.create(this,R.raw.glasses), "Necklace"  to  MediaPlayer.create(this,R.raw.necklace),
-    //"Necklaces"  to  MediaPlayer.create(this,R.raw.necklaces), "Watch"  to  MediaPlayer.create(this,R.raw.watch), "Watchs"  to  MediaPlayer.create(this,R.raw.watches),
-    //"Wheelchair"  to  MediaPlayer.create(this,R.raw.wheelchair), "Wheelchairs"  to  MediaPlayer.create(this,R.raw.wheelchairs), "OneUpperLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_left),
-    //"OneUpperRight"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_right), "OneLowerLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_left), "OneLowerRight"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_right),
-    //"OneCenter"  to  MediaPlayer.create(this,R.raw.one_sentence_center), "UpperRight"  to  MediaPlayer.create(this,R.raw.sentence_upper_right), "UpperLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left),
-    //"LowerRight"  to  MediaPlayer.create(this,R.raw.sentence_lower_right), "LowerLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left), "Center"  to  MediaPlayer.create(this,R.raw.sentence_center))
+    private val dictionary = mapOf("2" to  MediaPlayer.create(this,R.raw.two), "3"  to  MediaPlayer.create(this,R.raw.three),
+    "4"  to  MediaPlayer.create(this,R.raw.four), "5"  to  MediaPlayer.create(this,R.raw.five), "6"  to  MediaPlayer.create(this,R.raw.six),
+    "7"  to  MediaPlayer.create(this,R.raw.seven), "8"  to  MediaPlayer.create(this,R.raw.eight), "9"  to  MediaPlayer.create(this,R.raw.nine),
+    "10"  to  MediaPlayer.create(this,R.raw.ten), "Clothing"  to  MediaPlayer.create(this,R.raw.clothing), "Clothings"  to  MediaPlayer.create(this,R.raw.clothings),
+    "Coin"  to  MediaPlayer.create(this,R.raw.coin), "Coins"  to  MediaPlayer.create(this,R.raw.coins), "Earrings"  to  MediaPlayer.create(this,R.raw.earrings),
+    "Footwear"  to  MediaPlayer.create(this,R.raw.footwear), "Glasses"  to  MediaPlayer.create(this,R.raw.glasses), "Necklace"  to  MediaPlayer.create(this,R.raw.necklace),
+    "Necklaces"  to  MediaPlayer.create(this,R.raw.necklaces), "Watch"  to  MediaPlayer.create(this,R.raw.watch), "Watchs"  to  MediaPlayer.create(this,R.raw.watches),
+    "Wheelchair"  to  MediaPlayer.create(this,R.raw.wheelchair), "Wheelchairs"  to  MediaPlayer.create(this,R.raw.wheelchairs), "OneUpperLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_left),
+    "OneUpperRight"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_right), "OneLowerLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_left), "OneLowerRight"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_right),
+    "OneCenter"  to  MediaPlayer.create(this,R.raw.one_sentence_center), "UpperRight"  to  MediaPlayer.create(this,R.raw.sentence_upper_right), "UpperLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left),
+    "LowerRight"  to  MediaPlayer.create(this,R.raw.sentence_lower_right), "LowerLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left), "Center"  to  MediaPlayer.create(this,R.raw.sentence_center))
 
     private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
@@ -80,101 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    fun PlayAudioTest(view: View) {
-        //val audio : MediaPlayer = MediaPlayer.create(this, R.raw.sentence_upper_right)
-        //val audio2 : android.media.MediaPlayer = android.media.MediaPlayer.create(this, R.raw.one_sentence_center)
-        //PlayAudio(audio2, [])
-        //val audio3 = dictionary["OneLowerLeft"]
-        //if (audio3 != null) {
-            //PlayAudio(audio3)
-        //}
-        StartPlayAudio(3, false,"Glasses",false,"LowerRight", false)
-        //val seznam = listOf<String>("audio","audio2")
-    }
-    private fun StartPlayAudio(numOfItems: Int, numOfItemsBool: Boolean, item: String, itemBool: Boolean, location: String, locationBool: Boolean) {
-        if(!numOfItemsBool){
-            if(numOfItems > 1){
-                when (numOfItems) {
-                    2 -> PlayAudio(MediaPlayer.create(this, R.raw.two), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    3 -> PlayAudio(MediaPlayer.create(this, R.raw.three), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    4 -> PlayAudio(MediaPlayer.create(this, R.raw.four), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    5 -> PlayAudio(MediaPlayer.create(this, R.raw.five), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    6 -> PlayAudio(MediaPlayer.create(this, R.raw.six), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    7 -> PlayAudio(MediaPlayer.create(this, R.raw.seven), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    8 -> PlayAudio(MediaPlayer.create(this, R.raw.eight), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    9 -> PlayAudio(MediaPlayer.create(this, R.raw.nine), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    10 -> PlayAudio(MediaPlayer.create(this, R.raw.ten), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                }
-            }
-            else{
-                StartPlayAudio(numOfItems, true, item, itemBool, location, locationBool)
-            }
-        }
-        else if(!itemBool){
-            if((item == "Earrings") || (item == "Footwear") || (item == "Glasses")){
-                when(item){
-                    "Earrings" -> PlayAudio(MediaPlayer.create(this, R.raw.earrings), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "Footwear" -> PlayAudio(MediaPlayer.create(this, R.raw.footwear), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "Glasses" -> PlayAudio(MediaPlayer.create(this, R.raw.glasses), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                }
-            }
-            else{
-                if(numOfItems > 1){
-                    when (item) {
-                        "Necklase" -> PlayAudio(MediaPlayer.create(this, R.raw.necklaces), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Coin" -> PlayAudio(MediaPlayer.create(this, R.raw.coins), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Clothing" -> PlayAudio(MediaPlayer.create(this, R.raw.clothings), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Watch" -> PlayAudio(MediaPlayer.create(this, R.raw.watches), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Wheelchair" -> PlayAudio(MediaPlayer.create(this, R.raw.wheelchairs), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    }
-                }
-                else{
-                    when (item) {
-                        "Necklase" -> PlayAudio(MediaPlayer.create(this, R.raw.necklace), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Coin" -> PlayAudio(MediaPlayer.create(this, R.raw.coin), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Clothing" -> PlayAudio(MediaPlayer.create(this, R.raw.clothing), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Watch" -> PlayAudio(MediaPlayer.create(this, R.raw.watch), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                        "Wheelchair" -> PlayAudio(MediaPlayer.create(this, R.raw.wheelchair), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    }
-                }
-            }
-        }
-        else if(!locationBool){
-            if(numOfItems > 1){
-                when (location) {
-                    "Center" -> PlayAudio(MediaPlayer.create(this, R.raw.sentence_center), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "LowerRight" -> PlayAudio(MediaPlayer.create(this, R.raw.sentence_lower_right), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "LowerLeft" -> PlayAudio(MediaPlayer.create(this, R.raw.sentence_lower_left), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "UpperRight" -> PlayAudio(MediaPlayer.create(this, R.raw.sentence_upper_right), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "UpperLeft" -> PlayAudio(MediaPlayer.create(this, R.raw.sentence_upper_left), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                }
-            }
-            else{
-                when (location) {
-                    "Center" -> PlayAudio(MediaPlayer.create(this, R.raw.one_sentence_center), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "LowerRight" -> PlayAudio(MediaPlayer.create(this, R.raw.one_sentence_lower_right), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "LowerLeft" -> PlayAudio(MediaPlayer.create(this, R.raw.one_sentence_lower_left), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "UpperRight" -> PlayAudio(MediaPlayer.create(this, R.raw.one_sentence_upper_right), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                    "UpperLeft" -> PlayAudio(MediaPlayer.create(this, R.raw.one_sentence_upper_left), numOfItems, numOfItemsBool,item, itemBool,location, locationBool)
-                }
-            }
-        }
-    }
-    private fun PlayAudio(audio : MediaPlayer,numOfItems: Int, numOfItemsBool: Boolean, item: String, itemBool: Boolean, location: String, locationBool: Boolean){
-        audio.setOnCompletionListener(OnCompletionListener {
-            audio.stop()
-            if(!numOfItemsBool){
-                StartPlayAudio(numOfItems, true, item, itemBool, location, locationBool)
-            }
-            else if(!itemBool){
-                StartPlayAudio(numOfItems, true, item, true, location, locationBool)
-            }
-            else if(!locationBool){
-                StartPlayAudio(numOfItems, true, item, true, location, true)
-            }
-        })
-        audio.start()
-    }
+
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
