@@ -1,20 +1,17 @@
 package io.github.lkleno.mobilesensing.layout
 
-import android.annotation.SuppressLint
-import android.content.Context
+import android.R
 import android.graphics.*
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
-import android.media.Image
-import android.util.Log
-import android.view.View
+import android.os.CountDownTimer
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.camera.core.ImageProxy
 import io.github.lkleno.mobilesensing.MainActivity
 import io.github.lkleno.mobilesensing.tensorflow.Detector
 import org.tensorflow.lite.task.vision.detector.Detection
 import java.io.ByteArrayOutputStream
-import java.nio.ByteBuffer
 import kotlin.math.abs
 
 class Camera(private var context: MainActivity, private var arView: FrameLayout, private var detector: Detector)
@@ -52,7 +49,13 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
     {
         showBoxes = false
 
-        arView.removeAllViews()
+        //Wait a bit before removing all the bounding boxes
+        object : CountDownTimer(200, 200) {
+            override fun onTick(millisUntilFinished: Long) {}
+            override fun onFinish() {
+                arView.removeAllViews()
+            }
+        }.start()
     }
 
     fun attemptDetection(image : ImageProxy, maxResults : Int, scoreThreshold : Float)
@@ -96,14 +99,14 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
                     if(colorIndex >= colors.size) colorIndex = 0
                 }
 
-                drawRect(box.top.toInt(), box.left.toInt(), box.bottom.toInt(), box.right.toInt(), detectionsColor[i])
+                drawRect(detection.categories[0].label, box.top.toInt(), box.left.toInt(), box.bottom.toInt(), box.right.toInt(), detectionsColor[i])
             }
 
             oldDetections = detections.toMutableList()
         }
     }
 
-    private fun drawRect(x1 : Int, y1: Int, x2 : Int, y2 : Int, color : Int)
+    private fun drawRect(label : String, x1 : Int, y1: Int, x2 : Int, y2 : Int, color : Int)
     {
         //Sets the shape properties
         val sd = ShapeDrawable(RectShape())
@@ -111,9 +114,12 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
 //        sd.paint.color = colors[colorIndex]
         sd.paint.style = Paint.Style.STROKE
         sd.paint.strokeWidth = 20f
-        val shapeView = View(context)
+        val shapeView = TextView(context)
         shapeView.background = sd
 
+        shapeView.textSize = 20f
+        shapeView.setTextColor(color)
+        shapeView.setPadding(20, 10, 20, 10)
 
         val width = arView.width
         val windowMul = width / modelImageSize
@@ -129,7 +135,10 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
         val params = FrameLayout.LayoutParams(x2 - x1, y2 - y1)
         params.setMargins(x1, y1, x2, y2)
 
-        customRunOnUIThread{ arView.addView(shapeView, params) }
+        customRunOnUIThread{
+            shapeView.text = label
+            arView.addView(shapeView, params)
+        }
     }
 
     private fun customRunOnUIThread(function : Runnable)

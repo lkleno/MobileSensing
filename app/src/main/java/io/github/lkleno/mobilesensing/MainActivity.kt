@@ -38,6 +38,7 @@ typealias CameraListener = (image : ImageProxy) -> Unit
 private lateinit var binding : ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private var detectionScoreThreshold = 0.35f
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
     private var recording : Recording? = null
@@ -299,7 +300,7 @@ class MainActivity : AppCompatActivity() {
                 .build()
                 .also {
                     it.setAnalyzer(cameraExecutor, CameraAnalyzer { image ->
-                        camera.attemptDetection(image, 5, 0.3f)
+                        camera.attemptDetection(image, binding.maxObjectsSlider.progress, detectionScoreThreshold)
                     })
                 }
 
