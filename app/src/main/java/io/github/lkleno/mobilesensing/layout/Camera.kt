@@ -1,6 +1,5 @@
 package io.github.lkleno.mobilesensing.layout
 
-import android.R
 import android.graphics.*
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
@@ -36,13 +35,16 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
     private val modelImageSize = 320
     //modelXDrift is to compensate the drift found in the detectors x-axis
     private val modelXDrift = -50
+    private lateinit var detectItem : String
 
-    fun enableBoxes()
+    fun enableBoxes(detectItem : String)
     {
-        showBoxes = true
+        this.detectItem = detectItem
 
         xMaxDifference = arView.width * maxPercentageDifference
         yMaxDifference = arView.height * maxPercentageDifference
+
+        showBoxes = true
     }
 
     fun disableBoxes()
@@ -63,7 +65,7 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
         if(showBoxes)
         {
             // X and Y are inverted due to model output
-            detections = detector.run(image.toBitmap(), maxResults, scoreThreshold)!!
+            detections = detector.run(image.toBitmap(), this.detectItem, maxResults, scoreThreshold)!!
 
             customRunOnUIThread { arView.removeAllViews() }
 
