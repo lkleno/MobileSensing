@@ -33,11 +33,11 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-typealias LumaListener = (luma : Double) -> Unit
+typealias CameraListener = (image : ImageProxy) -> Unit
 private lateinit var binding : ActivityMainBinding
-private lateinit var camera : Camera
 
 class MainActivity : AppCompatActivity() {
+    private var detectionScoreThreshold = 0.35f
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
     private var recording : Recording? = null
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
     private lateinit var view : CustomDrawerLayout
+    private lateinit var camera : Camera
     private lateinit var detector : Detector
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,8 +204,8 @@ class MainActivity : AppCompatActivity() {
             val imageAnalyzer = ImageAnalysis.Builder()
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, LuminosityAnalyzer { luma ->
-                        customRunOnUIThread { binding.lumaValue.text = String.format("%.2f", luma) }
+                    it.setAnalyzer(cameraExecutor, CameraAnalyzer { image ->
+                        camera.attemptDetection(image, binding.maxObjectsSlider.progress, detectionScoreThreshold)
                     })
                 }
 
@@ -231,9 +232,9 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-// FIXME TEMP TO TEST OUT IMAGE
 
-private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnalysis.Analyzer {
+
+private class CameraAnalyzer(private val listener: CameraListener) : ImageAnalysis.Analyzer {
 
     private fun ByteBuffer.toByteArray(): ByteArray {
         rewind()    // Rewind the buffer to zero
@@ -243,15 +244,7 @@ private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnal
     }
 
     override fun analyze(image: ImageProxy) {
-
-//        val buffer = image.planes[0].buffer
-//        val data = buffer.toByteArray()
-//        val pixels = data.map { it.toInt() and 0xFF }
-//        val luma = pixels.average()
-
-        camera.attemptDetection(image, 5, 0.3f)
-
-//        listener(luma)
+        listener(image)
 
         image.close()
     }
