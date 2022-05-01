@@ -41,17 +41,6 @@ class MainActivity : AppCompatActivity() {
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
     private var recording : Recording? = null
-    private val dictionary = mapOf("2" to  MediaPlayer.create(this,R.raw.two), "3"  to  MediaPlayer.create(this,R.raw.three),
-    "4"  to  MediaPlayer.create(this,R.raw.four), "5"  to  MediaPlayer.create(this,R.raw.five), "6"  to  MediaPlayer.create(this,R.raw.six),
-    "7"  to  MediaPlayer.create(this,R.raw.seven), "8"  to  MediaPlayer.create(this,R.raw.eight), "9"  to  MediaPlayer.create(this,R.raw.nine),
-    "10"  to  MediaPlayer.create(this,R.raw.ten), "Clothing"  to  MediaPlayer.create(this,R.raw.clothing), "Clothings"  to  MediaPlayer.create(this,R.raw.clothings),
-    "Coin"  to  MediaPlayer.create(this,R.raw.coin), "Coins"  to  MediaPlayer.create(this,R.raw.coins), "Earrings"  to  MediaPlayer.create(this,R.raw.earrings),
-    "Footwear"  to  MediaPlayer.create(this,R.raw.footwear), "Glasses"  to  MediaPlayer.create(this,R.raw.glasses), "Necklace"  to  MediaPlayer.create(this,R.raw.necklace),
-    "Necklaces"  to  MediaPlayer.create(this,R.raw.necklaces), "Watch"  to  MediaPlayer.create(this,R.raw.watch), "Watchs"  to  MediaPlayer.create(this,R.raw.watches),
-    "Wheelchair"  to  MediaPlayer.create(this,R.raw.wheelchair), "Wheelchairs"  to  MediaPlayer.create(this,R.raw.wheelchairs), "OneUpperLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_left),
-    "OneUpperRight"  to  MediaPlayer.create(this,R.raw.one_sentence_upper_right), "OneLowerLeft"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_left), "OneLowerRight"  to  MediaPlayer.create(this,R.raw.one_sentence_lower_right),
-    "OneCenter"  to  MediaPlayer.create(this,R.raw.one_sentence_center), "UpperRight"  to  MediaPlayer.create(this,R.raw.sentence_upper_right), "UpperLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left),
-    "LowerRight"  to  MediaPlayer.create(this,R.raw.sentence_lower_right), "LowerLeft"  to  MediaPlayer.create(this,R.raw.sentence_upper_left), "Center"  to  MediaPlayer.create(this,R.raw.sentence_center))
 
     private lateinit var menuToggle : ActionBarDrawerToggle
     private lateinit var cameraExecutor : ExecutorService
