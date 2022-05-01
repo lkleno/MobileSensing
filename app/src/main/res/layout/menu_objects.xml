@@ -5,92 +5,83 @@
     android:id="@+id/menu_objects">
 
     <RadioButton
-        android:id="@+id/menu_object1"
+        android:id="@+id/menu_nothing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 1"
+        android:text="@string/string_nothing"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object2"
+        android:id="@+id/menu_clothing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 2"
+        android:text="@string/string_clothing"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object3"
+        android:id="@+id/menu_coin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 3"
+        android:text="@string/string_coin"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object4"
+        android:id="@+id/menu_earrings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 4"
+        android:text="@string/string_earrings"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object5"
+        android:id="@+id/menu_footwear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 5"
+        android:text="@string/string_footwear"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object6"
+        android:id="@+id/menu_glasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 6"
+        android:text="@string/string_glasses"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object7"
+        android:id="@+id/menu_necklace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 7"
+        android:text="@string/string_necklace"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object8"
+        android:id="@+id/menu_watch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 8"
+        android:text="@string/string_watch"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <RadioButton
-        android:id="@+id/menu_object9"
+        android:id="@+id/menu_wheelchair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Object 9"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <RadioButton
-        android:id="@+id/menu_object10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Object 10"
+        android:text="@string/string_wheelchair"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
