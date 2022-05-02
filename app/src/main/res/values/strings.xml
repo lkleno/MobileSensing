@@ -15,4 +15,9 @@
     <string name="string_watch">Watch</string>
     <string name="string_wheelchair">Wheelchair</string>
     <string name="string_coin">Coin</string>
+    <string name="string_center">Center</string>
+    <string name="string_lowerleft">LowerLeft</string>
+    <string name="string_lowerright">LowerRight</string>
+    <string name="string_upperleft">UpperLeft</string>
+    <string name="string_upperright">UpperRight</string>
 </resources>
