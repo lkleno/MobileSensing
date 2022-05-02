@@ -104,9 +104,9 @@ class Audio(private var context: MainActivity){
                 startPlayAudio(numOfItems, true, item, itemBool, location, locationBool)
             }
         } else if (!itemBool) {
-            if ((item == "Earrings") || (item == "Footwear") || (item == "Glasses")) {
+            if ((item == context.getString(R.string.string_earrings)) || (item == context.getString(R.string.string_footwear)) || (item == context.getString(R.string.string_glasses))) {
                 when (item) {
-                    "Earrings" -> playAudio(
+                    context.getString(R.string.string_earrings) -> playAudio(
                         MediaPlayer.create(context, R.raw.earrings),
                         numOfItems,
                         numOfItemsBool,
@@ -115,7 +115,7 @@ class Audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "Footwear" -> playAudio(
+                    context.getString(R.string.string_footwear) -> playAudio(
                         MediaPlayer.create(context, R.raw.footwear),
                         numOfItems,
                         numOfItemsBool,
@@ -124,7 +124,7 @@ class Audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "Glasses" -> playAudio(
+                    context.getString(R.string.string_glasses) -> playAudio(
                         MediaPlayer.create(context, R.raw.glasses),
                         numOfItems,
                         numOfItemsBool,
@@ -137,7 +137,7 @@ class Audio(private var context: MainActivity){
             } else {
                 if (numOfItems > 1) {
                     when (item) {
-                        "Necklase" -> playAudio(
+                        context.getString(R.string.string_necklace) -> playAudio(
                             MediaPlayer.create(context, R.raw.necklaces),
                             numOfItems,
                             numOfItemsBool,
@@ -146,7 +146,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Coin" -> playAudio(
+                        context.getString(R.string.string_coin) -> playAudio(
                             MediaPlayer.create(context, R.raw.coins),
                             numOfItems,
                             numOfItemsBool,
@@ -155,7 +155,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Clothing" -> playAudio(
+                        context.getString(R.string.string_clothing) -> playAudio(
                             MediaPlayer.create(context, R.raw.clothings),
                             numOfItems,
                             numOfItemsBool,
@@ -164,7 +164,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Watch" -> playAudio(
+                        context.getString(R.string.string_watch) -> playAudio(
                             MediaPlayer.create(context, R.raw.watches),
                             numOfItems,
                             numOfItemsBool,
@@ -173,7 +173,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Wheelchair" -> playAudio(
+                        context.getString(R.string.string_wheelchair) -> playAudio(
                             MediaPlayer.create(context, R.raw.wheelchairs),
                             numOfItems,
                             numOfItemsBool,
@@ -185,7 +185,7 @@ class Audio(private var context: MainActivity){
                     }
                 } else {
                     when (item) {
-                        "Necklase" -> playAudio(
+                        context.getString(R.string.string_necklace) -> playAudio(
                             MediaPlayer.create(context, R.raw.necklace),
                             numOfItems,
                             numOfItemsBool,
@@ -194,7 +194,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Coin" -> playAudio(
+                        context.getString(R.string.string_coin) -> playAudio(
                             MediaPlayer.create(context, R.raw.coin),
                             numOfItems,
                             numOfItemsBool,
@@ -203,7 +203,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Clothing" -> playAudio(
+                        context.getString(R.string.string_clothing) -> playAudio(
                             MediaPlayer.create(context, R.raw.clothing),
                             numOfItems,
                             numOfItemsBool,
@@ -212,7 +212,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Watch" -> playAudio(
+                        context.getString(R.string.string_watch) -> playAudio(
                             MediaPlayer.create(context, R.raw.watch),
                             numOfItems,
                             numOfItemsBool,
@@ -221,7 +221,7 @@ class Audio(private var context: MainActivity){
                             location,
                             locationBool
                         )
-                        "Wheelchair" -> playAudio(
+                        context.getString(R.string.string_wheelchair) -> playAudio(
                             MediaPlayer.create(context, R.raw.wheelchair),
                             numOfItems,
                             numOfItemsBool,
@@ -236,7 +236,7 @@ class Audio(private var context: MainActivity){
         } else if (!locationBool) {
             if (numOfItems > 1) {
                 when (location) {
-                    "Center" -> playAudio(
+                    context.getString(R.string.string_center) -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_center),
                         numOfItems,
                         numOfItemsBool,
@@ -245,7 +245,7 @@ class Audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "LowerRight" -> playAudio(
+                    context.getString(R.string.string_lowerright) -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_lower_right),
                         numOfItems,
                         numOfItemsBool,
@@ -254,7 +254,7 @@ class Audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "LowerLeft" -> playAudio(
+                    context.getString(R.string.string_lowerleft) -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_lower_left),
                         numOfItems,
                         numOfItemsBool,
@@ -263,7 +263,7 @@ class Audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "UpperRight" -> playAudio(
+                    context.getString(R.string.string_upperright) -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_upper_right),
                         numOfItems,
                         numOfItemsBool,
@@ -272,7 +272,7 @@ class Audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "UpperLeft" -> playAudio(
+                    context.getString(R.string.string_upperleft) -> playAudio(
                         MediaPlayer.create(context, R.raw.sentence_upper_left),
                         numOfItems,
                         numOfItemsBool,
@@ -284,7 +284,7 @@ class Audio(private var context: MainActivity){
                 }
             } else {
                 when (location) {
-                    "Center" -> playAudio(
+                    context.getString(R.string.string_center) -> playAudio(
                         MediaPlayer.create(context, R.raw.one_sentence_center),
                         numOfItems,
                         numOfItemsBool,
@@ -293,25 +293,25 @@ class Audio(private var context: MainActivity){
                         location,
                         locationBool
                     )
-                    "LowerRight" -> playAudio(
+                    context.getString(R.string.string_lowerright) -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_lower_right
                         ), numOfItems, numOfItemsBool, item, itemBool, location, locationBool
                     )
-                    "LowerLeft" -> playAudio(
+                    context.getString(R.string.string_lowerleft) -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_lower_left
                         ), numOfItems, numOfItemsBool, item, itemBool, location, locationBool
                     )
-                    "UpperRight" -> playAudio(
+                    context.getString(R.string.string_upperright) -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_upper_right
                         ), numOfItems, numOfItemsBool, item, itemBool, location, locationBool
                     )
-                    "UpperLeft" -> playAudio(
+                    context.getString(R.string.string_upperleft) -> playAudio(
                         MediaPlayer.create(
                             context,
                             R.raw.one_sentence_upper_left
