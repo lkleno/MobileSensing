@@ -4,10 +4,12 @@ import android.graphics.*
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.camera.core.ImageProxy
 import io.github.lkleno.mobilesensing.MainActivity
+import io.github.lkleno.mobilesensing.R
 import io.github.lkleno.mobilesensing.tensorflow.Detector
 import org.tensorflow.lite.task.vision.detector.Detection
 import java.io.ByteArrayOutputStream
@@ -29,20 +31,39 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
     private var colorIndex = 0
     private var showBoxes = false
     private val maxPercentageDifference = 0.15f
+    private var halfWidth : Float = 0f
+    private var halfHeight : Float = 0f
     private var xMaxDifference : Float = 0f
     private var yMaxDifference : Float = 0f
     //modelImageSize is the input size of the model (can be seen in model.tflite)
-    private val modelImageSize = 320
+    private val modelImageSize : Int = 320
+    private var windowMul : Int = 0
     //modelXDrift is to compensate the drift found in the detectors x-axis
     private val modelXDrift = -50
     private lateinit var detectItem : String
+    private lateinit var centreRegionCorners : Array<Array<Float>>
 
     fun enableBoxes(detectItem : String)
     {
         this.detectItem = detectItem
 
+        halfWidth = arView.width / 2f
+        halfHeight = arView.height / 2f
+
+        windowMul = arView.width / modelImageSize
+
         xMaxDifference = arView.width * maxPercentageDifference
         yMaxDifference = arView.height * maxPercentageDifference
+
+        val xThird = arView.width * 0.33f
+        val x2Third = xThird * 2
+        val yThird = arView.height * 0.33f
+        val y2Third = yThird * 2
+        centreRegionCorners = arrayOf(
+            arrayOf(xThird, yThird),
+            arrayOf(x2Third, yThird),
+            arrayOf(xThird, y2Third),
+            arrayOf(x2Third, y2Third))
 
         showBoxes = true
     }
@@ -99,12 +120,52 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
 
                     colorIndex++
                     if(colorIndex >= colors.size) colorIndex = 0
+
+                    Log.d("Region", getDetectionRegion((((box.top + box.bottom) / 2).toInt() + modelXDrift) * windowMul, ((box.left + box.right) / 2).toInt() * windowMul))
                 }
 
                 drawRect(detection.categories[0].label, box.top.toInt(), box.left.toInt(), box.bottom.toInt(), box.right.toInt(), detectionsColor[i])
             }
 
             oldDetections = detections.toMutableList()
+        }
+    }
+
+    // 5 Regions
+    // +--------+--------+
+    // |        |        |
+    // |     +--+--+     |
+    // |     |     |     |
+    // |     |     |     |
+    // +-----+     +-----+
+    // |     |     |     |
+    // |     |     |     |
+    // |     +--+--+     |
+    // |        |        |
+    // +--------+--------+
+    private fun getDetectionRegion(x : Int, y : Int) : String
+    {
+        return if(x > halfWidth)
+        {
+            if(y < halfHeight)
+            {
+                if(x > centreRegionCorners[0][0] && y > centreRegionCorners[0][1]) context.getString(R.string.string_center)
+                else context.getString(R.string.string_upperleft)
+            } else {
+                if(x > centreRegionCorners[2][0] && y < centreRegionCorners[2][1]) context.getString(R.string.string_center)
+                else context.getString(R.string.string_lowerleft)
+            }
+        }
+        else
+        {
+            if(y < halfHeight)
+            {
+                if(x < centreRegionCorners[1][0] && y > centreRegionCorners[1][1]) context.getString(R.string.string_center)
+                else context.getString(R.string.string_upperright)
+            } else {
+                if(x < centreRegionCorners[3][0] && y < centreRegionCorners[3][1]) context.getString(R.string.string_center)
+                else context.getString(R.string.string_lowerright)
+            }
         }
     }
 
@@ -123,11 +184,10 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
         shapeView.setTextColor(color)
         shapeView.setPadding(20, 10, 20, 10)
 
-        val width = arView.width
-        val windowMul = width / modelImageSize
+        val windowMul = arView.width / modelImageSize
         var x1 = (x1 + modelXDrift) * windowMul
         var x2 = (x2 + modelXDrift) * windowMul
-        val xOffset = (((x2 + x1) / 2) - (width / 2)) * -2
+        val xOffset = (((x2 + x1) / 2) - halfWidth.toInt()) * -2
         x1 += xOffset
         x2 += xOffset
         val y1 = y1 * windowMul
