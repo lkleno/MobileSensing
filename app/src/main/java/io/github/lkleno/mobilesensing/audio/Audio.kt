@@ -7,7 +7,7 @@ import io.github.lkleno.mobilesensing.R
 
 class Audio(private var context: MainActivity){
 
-    private fun startPlayAudio(
+    fun startPlayAudio(
         numOfItems: Int,
         numOfItemsBool: Boolean,
         item: String,
