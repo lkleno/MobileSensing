@@ -8,6 +8,7 @@ import android.media.MediaPlayer.OnCompletionListener
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -30,6 +31,7 @@ import io.github.lkleno.mobilesensing.layout.Camera
 import io.github.lkleno.mobilesensing.layout.CustomDrawerLayout
 import io.github.lkleno.mobilesensing.tensorflow.Detector
 import java.nio.ByteBuffer
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -37,7 +39,7 @@ import java.util.concurrent.Executors
 typealias CameraListener = (image : ImageProxy) -> Unit
 private lateinit var binding : ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
     private var detectionScoreThreshold = 0.35f
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var detector : Detector
     private lateinit var audio : Audio
 
+    private var tts: TextToSpeech? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
@@ -58,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         flagSetup()
-
+        tts = TextToSpeech(this,this)
         // Check Camera Permissions
         if(allPermissionsGranted()) startCamera()
         else ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
@@ -73,10 +77,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        if (tts != null){
+            tts!!.stop()
+            tts!!.shutdown()
+        }
         super.onDestroy()
         cameraExecutor.shutdown()
     }
-
+    override fun onInit(status: Int){
+        if(status == TextToSpeech.SUCCESS){
+            val result = tts!!.setLanguage(Locale.US)
+            Log.e("TTS", "The language specified is not supported!")
+            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                Log.e("TTS", "The language specified is not supported!")
+           }
+        }
+        else{
+            Log.e("TTS","Initialization Failed!")
+            Log.e("TTS", "The language specified is not supported!")
+        }
+    }
+    private fun speakOut(text: String){
+        tts!!.speak(text,TextToSpeech.QUEUE_ADD,null)
+    }
+    //fun TestAudio(View: view){
+    //    speakOut("Hello world")
+    //}
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -128,12 +154,11 @@ class MainActivity : AppCompatActivity() {
 
 
         audio = Audio(this)
-        audio.startPlayAudio(1,false,"Watch",false,"LowerLeft", false)
+        audio.startPlayAudio(2,false,"Coin",false,"LowerLeft", false)
         camera = Camera(this, binding.arView, detector, audio)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
-
     private fun listenerSetup()
     {
         val menu = binding.navigationView.menu
@@ -219,6 +244,10 @@ class MainActivity : AppCompatActivity() {
         catch(e : InterruptedException) {
             e.printStackTrace();
         }
+    }
+
+    fun TestAudio(view: View) {
+        speakOut("Hello world")
     }
 
 }
