@@ -24,6 +24,7 @@ import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import io.github.lkleno.mobilesensing.audio.Audio
 import io.github.lkleno.mobilesensing.databinding.ActivityMainBinding
 import io.github.lkleno.mobilesensing.layout.Camera
 import io.github.lkleno.mobilesensing.layout.CustomDrawerLayout
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var view : CustomDrawerLayout
     private lateinit var camera : Camera
     private lateinit var detector : Detector
+    private lateinit var audio : Audio
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,8 +127,9 @@ class MainActivity : AppCompatActivity() {
         binding.maxObjectsValue.text = binding.maxObjectsSlider.progress.toString()
 
 
-        camera = Camera(this, binding.arView, detector)
-
+        audio = Audio(this)
+        audio.startPlayAudio(1,false,"Watch",false,"LowerLeft", false)
+        camera = Camera(this, binding.arView, detector, audio)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
