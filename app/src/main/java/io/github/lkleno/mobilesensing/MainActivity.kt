@@ -1,13 +1,9 @@
 package io.github.lkleno.mobilesensing
 
 import android.Manifest
-import android.R.attr.path
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
-import android.media.MediaPlayer.OnCompletionListener
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.MenuItem
@@ -25,7 +21,6 @@ import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import io.github.lkleno.mobilesensing.audio.Audio
 import io.github.lkleno.mobilesensing.databinding.ActivityMainBinding
 import io.github.lkleno.mobilesensing.layout.Camera
 import io.github.lkleno.mobilesensing.layout.CustomDrawerLayout
@@ -50,7 +45,6 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
     private lateinit var view : CustomDrawerLayout
     private lateinit var camera : Camera
     private lateinit var detector : Detector
-    private lateinit var audio : Audio
 
     private var tts: TextToSpeech? = null
 
@@ -152,9 +146,6 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
 
         binding.maxObjectsValue.text = binding.maxObjectsSlider.progress.toString()
 
-
-        audio = Audio(this)
-        audio.startPlayAudio(2,false,"Coin",false,"LowerLeft", false)
         camera = Camera(this, binding.arView, detector, audio)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -245,11 +236,6 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
             e.printStackTrace();
         }
     }
-
-    fun TestAudio(view: View) {
-        speakOut("Hello world")
-    }
-
 }
 
 

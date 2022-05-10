@@ -4,13 +4,11 @@ import android.graphics.*
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.os.CountDownTimer
-import android.util.Log
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.camera.core.ImageProxy
 import io.github.lkleno.mobilesensing.MainActivity
 import io.github.lkleno.mobilesensing.R
-import io.github.lkleno.mobilesensing.audio.Audio
 import io.github.lkleno.mobilesensing.tensorflow.Detector
 import org.tensorflow.lite.task.vision.detector.Detection
 import java.io.ByteArrayOutputStream

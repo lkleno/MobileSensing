@@ -11,8 +11,7 @@
         android:layout_weight="1"
         android:text="@string/string_nothing"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:onClick="TestAudio"/>
+        android:textSize="20sp" />
 
     <RadioButton
         android:id="@+id/menu_clothing"
