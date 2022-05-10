@@ -91,12 +91,61 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
             Log.e("TTS", "The language specified is not supported!")
         }
     }
+    private fun getLocation(location: String): String{
+        return when (location) {
+            "Lower left" -> "have been detected at the lower left side of the screen."
+            "Lower right" -> "have been detected at the lower right side of the screen."
+            "Center" -> "have been detected at the center of the screen."
+            "Upper right" -> "have been detected at the upper right side of the screen."
+            "Upper left" -> "have been detected at the upper left side of the screen."
+            else -> "WRONG LOCATION"
+        }
+    }
+    private fun getNumber(numOfItems: Int) : String{
+        return when (numOfItems) {
+            2 -> "Two"
+            3 -> "Three"
+            4 -> "Four"
+            5 -> "Five"
+            6 -> "Six"
+            7 -> "Seven"
+            8 -> "Eight"
+            9 -> "Nine"
+            10 -> "Ten"
+            else -> "WRONG NUMBER"
+        }
+    }
+    private fun getLocationOne(location: String):String{
+        return when (location) {
+            "Lower left" -> "has been detected at the lower left side of the screen."
+            "Lower right" -> "has been detected at the lower right side of the screen."
+            "Center" -> "has been detected at the center of the screen."
+            "Upper right" -> "has been detected at the upper right side of the screen."
+            "Upper left" -> "has been detected at the upper left side of the screen."
+            else -> "WRONG LOCATION"
+        }
+    }
     private fun speakOut(text: String){
         tts!!.speak(text,TextToSpeech.QUEUE_ADD,null)
     }
-    //fun TestAudio(View: view){
-    //    speakOut("Hello world")
-    //}
+    public fun Audio(numOfItems: Int, item: String, location:String){
+        if (numOfItems > 1) {
+            val numString = getNumber(numOfItems)
+            val locationSentence = getLocation(location)
+            val letterS = "s"
+            if (item == "Earrings" || item == "Glasses"){
+                speakOut("$numString $item $locationSentence")
+            }
+            else{
+                speakOut("$numString $item$letterS $locationSentence")
+            }
+        }
+        else{
+            val locationSentence = getLocationOne(location)
+            speakOut("$item $locationSentence")
+        }
+    }
+    fun AudioTest(view: View) {Audio(3,"Watch", "Lower left")}
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -146,7 +195,7 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
 
         binding.maxObjectsValue.text = binding.maxObjectsSlider.progress.toString()
 
-        camera = Camera(this, binding.arView, detector, audio)
+        camera = Camera(this, binding.arView, detector)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
@@ -236,6 +285,8 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
             e.printStackTrace();
         }
     }
+
+
 }
 
 
