@@ -10,12 +10,15 @@ import android.widget.TextView
 import androidx.camera.core.ImageProxy
 import io.github.lkleno.mobilesensing.MainActivity
 import io.github.lkleno.mobilesensing.R
+import io.github.lkleno.mobilesensing.audio.Audio
 import io.github.lkleno.mobilesensing.tensorflow.Detector
 import org.tensorflow.lite.task.vision.detector.Detection
 import java.io.ByteArrayOutputStream
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 
-class Camera(private var context: MainActivity, private var arView: FrameLayout, private var detector: Detector)
+class Camera(private var context: MainActivity, private var arView: FrameLayout, private var detector: Detector, private var audio : Audio)
 {
     private var detections : MutableList<Detection> = mutableListOf()
     private var oldDetections : MutableList<Detection> = mutableListOf()
@@ -40,6 +43,8 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
     private var windowMul : Int = 0
     //modelXDrift is to compensate the drift found in the detectors x-axis
     private val modelXDrift = -50
+    private var lastAudioTime : Long = 0L
+    private val audioInterval : Int = 10000
     private lateinit var detectItem : String
     private lateinit var centreRegionCorners : Array<Array<Float>>
 
@@ -85,6 +90,10 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
     {
         if(showBoxes)
         {
+            val currentTime = System.currentTimeMillis()
+            val canPlayAudio = currentTime - lastAudioTime >= audioInterval
+            val regions : MutableList<String> = ArrayList()
+
             // X and Y are inverted due to model output
             detections = detector.run(image.toBitmap(), this.detectItem, maxResults, scoreThreshold)!!
 
@@ -120,11 +129,27 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
 
                     colorIndex++
                     if(colorIndex >= colors.size) colorIndex = 0
+                }
 
-                    Log.d("Region", getDetectionRegion((((box.top + box.bottom) / 2).toInt() + modelXDrift) * windowMul, ((box.left + box.right) / 2).toInt() * windowMul))
+                if(canPlayAudio)
+                {
+                    regions.add(getDetectionRegion((((box.top + box.bottom) / 2).toInt() + modelXDrift) * windowMul,
+                        ((box.left + box.right) / 2).toInt() * windowMul))
                 }
 
                 drawRect(detection.categories[0].label, box.top.toInt(), box.left.toInt(), box.bottom.toInt(), box.right.toInt(), detectionsColor[i])
+            }
+
+
+            if(canPlayAudio && regions.isNotEmpty())
+            {
+                for (region in regions.distinct())
+                {
+                    audio.startPlayAudio(Collections.frequency(regions, region), false,
+                            detections[0].categories[0].label, false,
+                            region, false)
+                }
+                lastAudioTime = currentTime
             }
 
             oldDetections = detections.toMutableList()
