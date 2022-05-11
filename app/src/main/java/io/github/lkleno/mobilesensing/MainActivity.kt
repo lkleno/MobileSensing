@@ -21,6 +21,7 @@ import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import io.github.lkleno.mobilesensing.audio.Audio
 import io.github.lkleno.mobilesensing.databinding.ActivityMainBinding
 import io.github.lkleno.mobilesensing.layout.Camera
 import io.github.lkleno.mobilesensing.layout.CustomDrawerLayout
@@ -34,7 +35,7 @@ import java.util.concurrent.Executors
 typealias CameraListener = (image : ImageProxy) -> Unit
 private lateinit var binding : ActivityMainBinding
 
-class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
+class MainActivity : AppCompatActivity() {
     private var detectionScoreThreshold = 0.35f
     private var imageCapture : ImageCapture? = null
     private var videoCapture : VideoCapture<Recorder>? = null
@@ -45,8 +46,7 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
     private lateinit var view : CustomDrawerLayout
     private lateinit var camera : Camera
     private lateinit var detector : Detector
-
-    private var tts: TextToSpeech? = null
+    private lateinit var audio : Audio
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,14 +56,11 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
         setContentView(view)
 
         flagSetup()
-        tts = TextToSpeech(this,this)
         // Check Camera Permissions
         if(allPermissionsGranted()) startCamera()
         else ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
 
-        detectorSetup()
-
-        uiSetup()
+        functionSetup()
 
         listenerSetup()
 
@@ -71,97 +68,11 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
     }
 
     override fun onDestroy() {
-        if (tts != null){
-            tts!!.stop()
-            tts!!.shutdown()
-        }
         super.onDestroy()
+        audio.onDestroy()
         cameraExecutor.shutdown()
     }
-    override fun onInit(status: Int){
-        if(status == TextToSpeech.SUCCESS){
-            val result = tts!!.setLanguage(Locale.US)
-            Log.e("TTS", "The language specified is not supported!")
-            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
-                Log.e("TTS", "The language specified is not supported!")
-           }
-        }
-        else{
-            Log.e("TTS","Initialization Failed!")
-            Log.e("TTS", "The language specified is not supported!")
-        }
-    }
-    private fun getLocation(location: String): String{
-        return when (location) {
-            "Lower left" -> "have been detected at the lower left side of the screen."
-            "Lower right" -> "have been detected at the lower right side of the screen."
-            "Center" -> "have been detected at the center of the screen."
-            "Upper right" -> "have been detected at the upper right side of the screen."
-            "Upper left" -> "have been detected at the upper left side of the screen."
-            else -> "WRONG LOCATION"
-        }
-    }
-    private fun getNumber(numOfItems: Int) : String{
-        return when (numOfItems) {
-            2 -> "Two"
-            3 -> "Three"
-            4 -> "Four"
-            5 -> "Five"
-            6 -> "Six"
-            7 -> "Seven"
-            8 -> "Eight"
-            9 -> "Nine"
-            10 -> "Ten"
-            else -> "WRONG NUMBER"
-        }
-    }
-    private fun getLocationOne(location: String):String{
-        return when (location) {
-            "Lower left" -> "has been detected at the lower left side of the screen."
-            "Lower right" -> "has been detected at the lower right side of the screen."
-            "Center" -> "has been detected at the center of the screen."
-            "Upper right" -> "has been detected at the upper right side of the screen."
-            "Upper left" -> "has been detected at the upper left side of the screen."
-            else -> location
-        }
-    }
-    private fun getItem(item:String):String{
-        return when (item) {
-            "Clothing" -> "Clothes"
-            "Coin" -> "Coins"
-            "Footwear" -> "Footwears"
-            "Necklace" -> "Necklaces"
-            "Watch" -> "Watches"
-            "Wheelchair" -> "Wheelchairs"
-            else -> item
-        }
-    }
-    private fun getItemOne(item:String):String{
-        return when (item) {
-            "Coin" -> "A coin"
-            "Necklace" -> "A Necklace"
-            "Watch" -> "A watch"
-            "Wheelchair" -> "A Wheelchair"
-            else -> item
-        }
-    }
-    private fun speakOut(text: String){
-        tts!!.speak(text,TextToSpeech.QUEUE_ADD,null)
-    }
-    public fun Audio(numOfItems: Int, item: String, location:String){
-        if (numOfItems > 1) {
-            val numString = getNumber(numOfItems)
-            val locationSentence = getLocation(location)
-            val itemCorrected = getItem(item)
-            speakOut("$numString $itemCorrected $locationSentence")
-        }
-        else{
-            val locationSentence = getLocationOne(location)
-            val itemCorrected = getItemOne(item)
-            speakOut("$itemCorrected $locationSentence")
-        }
-    }
-    fun AudioTest(view: View) {Audio(3,"Watch", "Lower left")}
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -197,13 +108,11 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
-    private fun detectorSetup()
+    private fun functionSetup()
     {
+        audio = Audio(this)
         detector = Detector(this)
-    }
 
-    private fun uiSetup()
-    {
         menuToggle = ActionBarDrawerToggle(this, view, R.string.menu_open, R.string.menu_close)
         view.addDrawerListener(menuToggle)
         menuToggle.syncState()
@@ -211,7 +120,7 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
 
         binding.maxObjectsValue.text = binding.maxObjectsSlider.progress.toString()
 
-        camera = Camera(this, binding.arView, detector)
+        camera = Camera(this, binding.arView, detector, audio)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }

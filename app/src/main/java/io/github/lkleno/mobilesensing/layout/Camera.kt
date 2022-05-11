@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.camera.core.ImageProxy
 import io.github.lkleno.mobilesensing.MainActivity
 import io.github.lkleno.mobilesensing.R
+import io.github.lkleno.mobilesensing.audio.Audio
 import io.github.lkleno.mobilesensing.tensorflow.Detector
 import org.tensorflow.lite.task.vision.detector.Detection
 import java.io.ByteArrayOutputStream
@@ -16,7 +17,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 
-class Camera(private var context: MainActivity, private var arView: FrameLayout, private var detector: Detector, private var audio : Audio)
+class Camera(private var context: MainActivity, private var arView: FrameLayout, private var detector: Detector, private var audio: Audio)
 {
     private var detections : MutableList<Detection> = mutableListOf()
     private var oldDetections : MutableList<Detection> = mutableListOf()
@@ -143,9 +144,12 @@ class Camera(private var context: MainActivity, private var arView: FrameLayout,
             {
                 for (region in regions.distinct())
                 {
-                    audio.startPlayAudio(Collections.frequency(regions, region), false,
-                            detections[0].categories[0].label, false,
-                            region, false)
+                    audio.Audio(Collections.frequency(regions, region),
+                                detections[0].categories[0].label,
+                                region)
+//                    audio.startPlayAudio(Collections.frequency(regions, region), false,
+//                            detections[0].categories[0].label, false,
+//                            region, false)
                 }
                 lastAudioTime = currentTime
             }
