@@ -122,7 +122,27 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
             "Center" -> "has been detected at the center of the screen."
             "Upper right" -> "has been detected at the upper right side of the screen."
             "Upper left" -> "has been detected at the upper left side of the screen."
-            else -> "WRONG LOCATION"
+            else -> location
+        }
+    }
+    private fun getItem(item:String):String{
+        return when (item) {
+            "Clothing" -> "Clothes"
+            "Coin" -> "Coins"
+            "Footwear" -> "Footwears"
+            "Necklace" -> "Necklaces"
+            "Watch" -> "Watches"
+            "Wheelchair" -> "Wheelchairs"
+            else -> item
+        }
+    }
+    private fun getItemOne(item:String):String{
+        return when (item) {
+            "Coin" -> "A coin"
+            "Necklace" -> "A Necklace"
+            "Watch" -> "A watch"
+            "Wheelchair" -> "A Wheelchair"
+            else -> item
         }
     }
     private fun speakOut(text: String){
@@ -132,17 +152,13 @@ class MainActivity : AppCompatActivity(),TextToSpeech.OnInitListener {
         if (numOfItems > 1) {
             val numString = getNumber(numOfItems)
             val locationSentence = getLocation(location)
-            val letterS = "s"
-            if (item == "Earrings" || item == "Glasses"){
-                speakOut("$numString $item $locationSentence")
-            }
-            else{
-                speakOut("$numString $item$letterS $locationSentence")
-            }
+            val itemCorrected = getItem(item)
+            speakOut("$numString $itemCorrected $locationSentence")
         }
         else{
             val locationSentence = getLocationOne(location)
-            speakOut("$item $locationSentence")
+            val itemCorrected = getItemOne(item)
+            speakOut("$itemCorrected $locationSentence")
         }
     }
     fun AudioTest(view: View) {Audio(3,"Watch", "Lower left")}
