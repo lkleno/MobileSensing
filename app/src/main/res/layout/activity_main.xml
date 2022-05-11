@@ -25,42 +25,6 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent=".50" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp"
-                android:fitsSystemWindows="true">
-
-                <TextView
-                    android:id="@+id/luma_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:shadowColor="@color/text_shadow"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="2"
-                    android:text="@string/luma_label"
-                    android:textColor="@color/light_font"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/luma_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10sp"
-                    android:shadowColor="@color/text_shadow"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="2"
-                    android:textColor="@color/light_font"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
             <FrameLayout
                 android:id="@+id/ar_view"
                 android:layout_width="match_parent"
